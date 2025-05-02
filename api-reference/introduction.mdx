@@ -17,6 +17,7 @@ All requests to the TheFaithApp API require **two forms of authentication**:
 2. **Firebase ID Token**  
    - Each user must authenticate with Firebase to obtain an ID token.
    - This token must be included as a Bearer token in the `Authorization` header.
+   - If using email-password authentication, ensure you collect the user's name during registration as this is required for our platform to properly identify users.
 
 **Example headers:**
 
@@ -47,6 +48,7 @@ Before you can access your API key, you must upload your Firebase service accoun
 
 - Set up Firebase Authentication in your app (using the same Firebase project as your service account).
 - When a user logs in, retrieve their Firebase ID token using the Firebase SDK.
+- If implementing email-password authentication, be sure to collect and store the user's name during the registration process. This information is essential for our platform to properly identify and manage user accounts.
 
 ### 4. Make Authenticated Requests
 
