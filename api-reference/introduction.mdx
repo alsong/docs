@@ -2,13 +2,13 @@
 title: API Introduction
 ---
 
-# Welcome to the Open API
+# Welcome to the TheFaithApp API
 
-The Open API allows third-party apps and services to interact with our platform, enabling features such as subscribing users to churches, sending notifications, and more. This API is designed for partners and developers who want to integrate with our ecosystem securely and efficiently.
+The TheFaithApp API allows third-party apps and services to interact with our platform, enabling features such as subscribing users to churches, sending notifications, and more. This API is designed for partners and developers who want to integrate with our ecosystem securely and efficiently.
 
 ## Authentication
 
-All requests to the Open API require **two forms of authentication**:
+All requests to the TheFaithApp API require **two forms of authentication**:
 
 1. **API Key**  
    - Each client (partner app) is issued a unique API key.
@@ -68,7 +68,7 @@ curl -X POST https://your-api-domain.com/api/v1/open/subscribe \
 2. **Retrieve your API key from the Settings page.**
 3. **User logs in via Firebase in your app.**
 4. **Your app retrieves the Firebase ID token.**
-5. **Your backend (or frontend) sends requests to the Open API, including:**
+5. **Your backend (or frontend) sends requests to the TheFaithApp API, including:**
    - The API key (as `X-API-Key`)
    - The Firebase ID token (as Bearer token in `Authorization`)
 6. **The API validates both credentials and processes the request.**
@@ -78,13 +78,5 @@ curl -X POST https://your-api-domain.com/api/v1/open/subscribe \
 - If either the API key or Firebase token is missing or invalid, the API will return a `401 Unauthorized` error.
 - If the client is not found or Firebase credentials are missing, a `404` or `401` error will be returned.
 - Always check the response for error messages and handle them appropriately in your app.
-
-## Next Steps
-
-- [See the full list of endpoints](./endpoints)
-- [Learn about error codes](./errors)
-- [How to get your API key](./api-keys)
-
----
 
 If you have any questions or need support, please contact our developer support team.
