@@ -47,7 +47,8 @@
             "group": "Endpoint Examples",
             "pages": [
               "api-reference/endpoint/subscribe",
-              "api-reference/endpoint/audios"
+              "api-reference/endpoint/audios",
+              "api-reference/endpoint/videos"
             ]
           }
         ]
