@@ -48,7 +48,8 @@
             "pages": [
               "api-reference/endpoint/subscribe",
               "api-reference/endpoint/audios",
-              "api-reference/endpoint/videos"
+              "api-reference/endpoint/videos",
+              "api-reference/endpoint/streamings"
             ]
           }
         ]

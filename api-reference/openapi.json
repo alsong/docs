@@ -795,6 +795,242 @@
           }
         }
       }
+    },
+    "/v1/open/streamings": {
+      "get": {
+        "summary": "Get Live Streamings",
+        "description": "Retrieve the current live video and audio streaming information for the authenticated user's church.",
+        "tags": [
+          "Open API"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "Your client API key from the dashboard (Settings page).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current live video and audio streaming information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "video_streaming": {
+                      "type": "object",
+                      "description": "Information about the current live video stream.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "Unique identifier for the video stream.",
+                          "example": 1
+                        },
+                        "live_title": {
+                          "type": "string",
+                          "description": "Title of the live video stream.",
+                          "example": "REVERE 24/7 Worship Live Stream"
+                        },
+                        "source": {
+                          "type": "string",
+                          "description": "Type of video streaming source. Possible values:\n- `0`: RTMP Live\n- `1`: YouTube Live ID\n- `2`: M3U8 URL",
+                          "example": "1",
+                          "enum": [
+                            "0",
+                            "1",
+                            "2"
+                          ]
+                        },
+                        "live_stream_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL to the live video stream (e.g., YouTube embed link).",
+                          "example": "https://www.youtube.com/embed/M94RrCFqaw4?si=Ma17eZPBxSWfzZQi"
+                        },
+                        "live_status": {
+                          "type": "integer",
+                          "description": "Live status of the video stream. `0` = live, `1` = not live.",
+                          "example": 0,
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        },
+                        "client_id": {
+                          "type": "integer",
+                          "description": "ID of the church/client this stream belongs to.",
+                          "example": 2
+                        },
+                        "deleted_at": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was deleted, or null if not deleted.",
+                          "example": null
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was created.",
+                          "example": "2025-05-02T21:50:44.000000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was last updated.",
+                          "example": "2025-05-02T21:50:44.000000Z"
+                        }
+                      }
+                    },
+                    "audio_streaming": {
+                      "type": "object",
+                      "description": "Information about the current live audio stream.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "Unique identifier for the audio stream.",
+                          "example": 1
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title of the audio stream.",
+                          "example": "teste"
+                        },
+                        "stream_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL to the live audio stream.",
+                          "example": "https://stream.zeno.fm/h3d42qflyiquv"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Type identifier for the audio stream.",
+                          "example": "0"
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Live status of the audio stream. `0` = live, `1` = not live.",
+                          "example": "0",
+                          "enum": [
+                            "0",
+                            "1"
+                          ]
+                        },
+                        "thumbnail": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL to the thumbnail image for the audio stream.",
+                          "example": "https://i0.wp.com/www.robertrickman.net/wp-content/uploads/2015/05/stock-footage-audio-spectrum-loop.jpg"
+                        },
+                        "client_id": {
+                          "type": "integer",
+                          "description": "ID of the church/client this stream belongs to.",
+                          "example": 2
+                        },
+                        "deleted_at": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was deleted, or null if not deleted.",
+                          "example": null
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was created.",
+                          "example": "2025-05-02T21:50:13.000000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the stream was last updated.",
+                          "example": "2025-05-02T21:50:13.000000Z"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "video_streaming": {
+                        "id": 1,
+                        "live_title": "REVERE 24/7 Worship Live Stream",
+                        "source": "1",
+                        "live_stream_url": "https://www.youtube.com/embed/M94RrCFqaw4?si=Ma17eZPBxSWfzZQi",
+                        "live_status": 0,
+                        "client_id": 2,
+                        "deleted_at": null,
+                        "created_at": "2025-05-02T21:50:44.000000Z",
+                        "updated_at": "2025-05-02T21:50:44.000000Z"
+                      },
+                      "audio_streaming": {
+                        "id": 1,
+                        "title": "teste",
+                        "stream_url": "https://stream.zeno.fm/h3d42qflyiquv",
+                        "type": "0",
+                        "status": "0",
+                        "thumbnail": "https://i0.wp.com/www.robertrickman.net/wp-content/uploads/2015/05/stock-footage-audio-spectrum-loop.jpg",
+                        "client_id": 2,
+                        "deleted_at": null,
+                        "created_at": "2025-05-02T21:50:13.000000Z",
+                        "updated_at": "2025-05-02T21:50:13.000000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid API key or Firebase token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error_message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "webhooks": {
