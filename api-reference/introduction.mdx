@@ -1,33 +1,90 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: API Introduction
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+# Welcome to the Open API
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+The Open API allows third-party apps and services to interact with our platform, enabling features such as subscribing users to churches, sending notifications, and more. This API is designed for partners and developers who want to integrate with our ecosystem securely and efficiently.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All requests to the Open API require **two forms of authentication**:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+1. **API Key**  
+   - Each client (partner app) is issued a unique API key.
+   - This key must be included in the `X-API-Key` header of every request.
+
+2. **Firebase ID Token**  
+   - Each user must authenticate with Firebase to obtain an ID token.
+   - This token must be included as a Bearer token in the `Authorization` header.
+
+**Example headers:**
+
+```http
+X-API-Key: your-client-api-key
+Authorization: Bearer your-firebase-id-token
 ```
+
+> ⚠️ Both headers are required for all endpoints under `/v1/open`.
+
+## Getting Started
+
+### 1. Upload Your Firebase Service Account
+
+Before you can access your API key, you must upload your Firebase service account file for the Firebase project you want to use.
+
+- Go to the **Dashboard**.
+- Navigate to the **Settings** page.
+- Upload your Firebase service account JSON file.
+- Once uploaded, your API key will be generated and displayed.
+
+### 2. Obtain Your API Key
+
+- After uploading your Firebase service account, your unique API key will be available on the **Settings** page of the dashboard.
+- Keep this key secure. It is required for all API requests.
+
+### 3. Integrate Firebase Authentication
+
+- Set up Firebase Authentication in your app (using the same Firebase project as your service account).
+- When a user logs in, retrieve their Firebase ID token using the Firebase SDK.
+
+### 4. Make Authenticated Requests
+
+- Include both the `X-API-Key` and `Authorization` headers in your API requests.
+
+**Example using `curl`:**
+
+```bash
+curl -X POST https://your-api-domain.com/api/v1/open/subscribe \
+  -H "X-API-Key: your-client-api-key" \
+  -H "Authorization: Bearer your-firebase-id-token" \
+  -H "Content-Type: application/json" \
+  -d '{"fcm_token": "user-fcm-token"}'
+```
+
+## Example Workflow
+
+1. **Upload your Firebase service account file in the dashboard.**
+2. **Retrieve your API key from the Settings page.**
+3. **User logs in via Firebase in your app.**
+4. **Your app retrieves the Firebase ID token.**
+5. **Your backend (or frontend) sends requests to the Open API, including:**
+   - The API key (as `X-API-Key`)
+   - The Firebase ID token (as Bearer token in `Authorization`)
+6. **The API validates both credentials and processes the request.**
+
+## Error Handling
+
+- If either the API key or Firebase token is missing or invalid, the API will return a `401 Unauthorized` error.
+- If the client is not found or Firebase credentials are missing, a `404` or `401` error will be returned.
+- Always check the response for error messages and handle them appropriately in your app.
+
+## Next Steps
+
+- [See the full list of endpoints](./endpoints)
+- [Learn about error codes](./errors)
+- [How to get your API key](./api-keys)
+
+---
+
+If you have any questions or need support, please contact our developer support team.
