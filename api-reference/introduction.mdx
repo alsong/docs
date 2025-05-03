@@ -54,7 +54,64 @@ Before you can access your API key, you must upload your Firebase service accoun
 - When a user logs in, retrieve their Firebase ID token using the Firebase SDK.
 - If implementing email-password authentication, be sure to collect and store the user's name during the registration process. This information is essential for our platform to properly identify and manage user accounts.
 
-### 4. Make Authenticated Requests
+### 4. Set Up Push Notifications
+
+To receive push notifications in your app, you need to:
+
+1. **Get Your Notification Channel Name**
+   - Go to the **Dashboard**
+   - Navigate to **Settings** > **Developer Tools**
+   - Under **Firebase Configuration**, you'll find your unique notification channel name
+   - This channel name is required for configuring push notifications in your app
+
+2. **Configure Push Notifications in Your App**
+   - Use your app's native Firebase implementation to subscribe to the notification channel
+   - The channel name from your dashboard must match the one configured in your app
+
+**Platform-specific implementation examples:**
+
+**Flutter:**
+```dart
+// Subscribe to the notification channel
+await FirebaseMessaging.instance.subscribeToTopic('your-notification-channel-name');
+```
+
+**React Native:**
+```javascript
+import messaging from '@react-native-firebase/messaging';
+
+// Subscribe to the notification channel
+await messaging().subscribeToTopic('your-notification-channel-name');
+```
+
+**Android (Java):**
+```java
+FirebaseMessaging.getInstance().subscribeToTopic("your-notification-channel-name")
+    .addOnCompleteListener(task -> {
+        String msg = task.isSuccessful() ? "Subscribed to channel" : "Subscribe failed";
+        Log.d("Firebase", msg);
+    });
+```
+
+**iOS (Swift):**
+```swift
+Messaging.messaging().subscribe(toTopic: "your-notification-channel-name") { error in
+    if let error = error {
+        print("Failed to subscribe to channel: \(error)")
+    } else {
+        print("Successfully subscribed to channel")
+    }
+}
+```
+
+> ⚠️ **Important**: Push notifications will not be delivered to your app if:
+> - The notification channel is not properly configured in your app
+> - The channel name in your dashboard doesn't match your app's configuration
+> - Firebase Messaging is not properly initialized in your app
+>
+> Always verify your channel name and ensure proper Firebase configuration before expecting to receive notifications.
+
+### 5. Make Authenticated Requests
 
 - Include both the `X-API-Key` and `Authorization` headers in your API requests.
 
