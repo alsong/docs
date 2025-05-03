@@ -42,16 +42,6 @@
           "anchor": "Documentation",
           "href": "https://guide.thefaithapp.com",
           "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
         }
       ]
     }
@@ -75,9 +65,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/thefaithapp_",
+      "instagram": "https://www.instagram.com/the_faithapp",
+      "website": "https://www.thefaithapp.com"
     }
   }
 }
