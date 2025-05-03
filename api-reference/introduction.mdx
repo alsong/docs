@@ -18,6 +18,10 @@ All requests to the TheFaithApp API require **two forms of authentication**:
    - Each user must authenticate with Firebase to obtain an ID token.
    - This token must be included as a Bearer token in the `Authorization` header.
    - If using email-password authentication, ensure you collect the user's name during registration as this is required for our platform to properly identify users.
+   - **Important**: Firebase ID tokens expire after 1 hour (as set by Google). You must implement token refresh logic in your application:
+     - On the client side (mobile/web), use the refresh token to obtain new ID tokens when the current one expires.
+     - Firebase SDKs handle this automatically if you're using their client libraries.
+     - If you're implementing your own solution, ensure you refresh tokens before they expire to maintain continuous authentication.
 
 **Example headers:**
 
