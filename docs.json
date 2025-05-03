@@ -53,7 +53,8 @@
               "api-reference/endpoint/devotionals",
               "api-reference/endpoint/church",
               "api-reference/endpoint/events",
-              "api-reference/endpoint/branches"
+              "api-reference/endpoint/branches",
+              "api-reference/endpoint/notifications"
             ]
           }
         ]
