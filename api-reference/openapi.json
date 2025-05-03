@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://app.thefaithapp.com"
+      "url": "https://app.thefaithapp.com/api"
     }
   ],
   "security": [
