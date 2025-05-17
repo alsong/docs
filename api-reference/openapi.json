@@ -1440,6 +1440,12 @@
                           "description": "URL for online giving/donations for the church.",
                           "example": "https://app.thefaithapp.com/give/2"
                         },
+                        "prayer_request_link": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL for submitting prayer requests to the church.",
+                          "example": "https://app.thefaithapp.com/prayer-requests/2"
+                        },
                         "socials": {
                           "type": "object",
                           "description": "Social media links for the church.",
@@ -1580,6 +1586,7 @@
                         "updated_at": "2025-05-02T14:55:02.000000Z",
                         "about": "<p>This is a life transforming and dynamic church</p>",
                         "giving_link": "https://app.thefaithapp.com/give/2",
+                        "prayer_request_link": "https://app.thefaithapp.com/prayer-requests/2",
                         "socials": {
                           "id": 1,
                           "client_id": 2,
