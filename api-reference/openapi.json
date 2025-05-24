@@ -1035,7 +1035,7 @@
     "/v1/open/devotionals": {
       "get": {
         "summary": "Get Devotionals",
-        "description": "Retrieve a paginated list of devotionals for the authenticated user's church. Supports optional search and pagination.",
+        "description": "Retrieve devotionals for the authenticated user's church. When X-Client-Date header is provided, returns a single devotional for that date with metadata. Otherwise, returns a paginated list of devotionals.",
         "tags": [
           "Open API"
         ],
@@ -1055,9 +1055,28 @@
             }
           },
           {
+            "name": "X-Client-Date",
+            "in": "header",
+            "description": "The date for which to retrieve the devotional (format: YYYY-MM-DD). If provided, returns a single devotional for that date with metadata. If not provided, returns a paginated list of devotionals.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "X-Client-Timezone",
+            "in": "header",
+            "description": "The timezone to use for date calculations (e.g., 'America/New_York'). Only used when X-Client-Date is provided. If not provided, uses UTC.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "search",
             "in": "query",
-            "description": "Search term to filter devotionals.",
+            "description": "Search term to filter devotionals. Only used when X-Client-Date is not provided.",
             "required": false,
             "schema": {
               "type": "string"
@@ -1066,7 +1085,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number for pagination (default: 1).",
+            "description": "Page number for pagination (default: 1). Only used when X-Client-Date is not provided.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -1076,198 +1095,56 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of devotionals.",
+            "description": "Devotional information. Returns either a single devotional with metadata when X-Client-Date is provided, or a paginated list of devotionals when no date is specified.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "current_page": {
-                      "type": "integer",
-                      "description": "Current page number of the result set.",
-                      "example": 1
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DevotionalResponse"
                     },
-                    "data": {
-                      "type": "array",
-                      "description": "List of devotional objects.",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer",
-                            "description": "Unique identifier for the devotional.",
-                            "example": 1
-                          },
-                          "client_id": {
-                            "type": "integer",
-                            "description": "ID of the church/client this devotional belongs to.",
-                            "example": 2
-                          },
-                          "thumbnail": {
-                            "type": "string",
-                            "format": "uri",
-                            "description": "URL to the devotional's thumbnail image.",
-                            "example": "https://d2c58p2vdu8kb2.cloudfront.net/devotionals/NIh2IeZv2g1k4AoNVhkoQarVWAkSAAnQLrr4DF7j.jpg"
-                          },
-                          "title": {
-                            "type": "string",
-                            "description": "Title of the devotional.",
-                            "example": "We're Not Mere Humans"
-                          },
-                          "author": {
-                            "type": "string",
-                            "description": "Author of the devotional.",
-                            "example": "Chris Oyakhilome"
-                          },
-                          "content": {
-                            "type": "string",
-                            "description": "Main content of the devotional (may contain HTML).",
-                            "example": "<div class=\"wp-block-media-text alignwide\">...</div>"
-                          },
-                          "bible_reading": {
-                            "type": "string",
-                            "description": "Bible reading section (may contain HTML).",
-                            "example": "<p><strong><em>These things have I written unto you...</em></strong></p>"
-                          },
-                          "confession": {
-                            "type": "string",
-                            "description": "Confession section (may contain HTML).",
-                            "example": "<p><strong>CONFESSION</strong></p>..."
-                          },
-                          "studies": {
-                            "type": "string",
-                            "description": "Further study section (may contain HTML).",
-                            "example": "<p><strong>FURTHER STUDY:</strong></p>..."
-                          },
-                          "date": {
-                            "type": "string",
-                            "format": "date",
-                            "description": "Date of the devotional.",
-                            "example": "2025-05-03"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the devotional was created.",
-                            "example": "2025-05-03T06:04:22.000000Z"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the devotional was last updated.",
-                            "example": "2025-05-03T06:07:05.000000Z"
-                          },
-                          "deleted_at": {
-                            "type": [
-                              "string",
-                              "null"
-                            ],
-                            "format": "date-time",
-                            "description": "Timestamp when the devotional was deleted, or null if not deleted.",
-                            "example": null
-                          },
-                          "tags": {
-                            "type": "string",
-                            "description": "JSON-encoded array of tags for the devotional.",
-                            "example": "[\"prayer\"]"
-                          }
-                        }
-                      }
-                    },
-                    "first_page_url": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "URL to the first page of results.",
-                      "example": "https://app.thefaithapp.com/api/v1/open/devotionals?page=1"
-                    },
-                    "from": {
-                      "type": "integer",
-                      "description": "Index of the first item returned.",
-                      "example": 1
-                    },
-                    "last_page": {
-                      "type": "integer",
-                      "description": "Last page number of the result set.",
-                      "example": 1
-                    },
-                    "last_page_url": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "URL to the last page of results.",
-                      "example": "https://app.thefaithapp.com/api/v1/open/devotionals?page=1"
-                    },
-                    "links": {
-                      "type": "array",
-                      "description": "Pagination navigation links.",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "url": {
-                            "type": [
-                              "string",
-                              "null"
-                            ],
-                            "format": "uri",
-                            "description": "URL for the page link, or null if not available.",
-                            "example": null
-                          },
-                          "label": {
-                            "type": "string",
-                            "description": "Label for the page link (e.g., 'Next', 'Previous', or page number).",
-                            "example": "&laquo; Previous"
-                          },
-                          "active": {
-                            "type": "boolean",
-                            "description": "Whether this page link is active.",
-                            "example": false
-                          }
-                        }
-                      }
-                    },
-                    "next_page_url": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "format": "uri",
-                      "description": "URL to the next page of results, or null if on the last page.",
-                      "example": null
-                    },
-                    "path": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "Base path for the paginated results.",
-                      "example": "https://app.thefaithapp.com/api/v1/open/devotionals"
-                    },
-                    "per_page": {
-                      "type": "integer",
-                      "description": "Number of items per page.",
-                      "example": 30
-                    },
-                    "prev_page_url": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "format": "uri",
-                      "description": "URL to the previous page of results, or null if on the first page.",
-                      "example": null
-                    },
-                    "to": {
-                      "type": "integer",
-                      "description": "Index of the last item returned.",
-                      "example": 1
-                    },
-                    "total": {
-                      "type": "integer",
-                      "description": "Total number of items available.",
-                      "example": 1
+                    {
+                      "$ref": "#/components/schemas/PaginatedDevotionalsResponse"
                     }
-                  }
+                  ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Successful response",
+                  "single_devotional": {
+                    "summary": "Response when X-Client-Date header is provided",
+                    "value": {
+                      "devotional": {
+                        "id": 1,
+                        "client_id": 2,
+                        "thumbnail": "devotionals/NIh2IeZv2g1k4AoNVhkoQarVWAkSAAnQLrr4DF7j.jpg",
+                        "title": "We're Not Mere Humans",
+                        "author": "Chris Parker",
+                        "content": "<div class=\"wp-block-media-text alignwide\">...</div>",
+                        "bible_reading": "<p><strong><em>These things have I written unto you...</em></strong></p>",
+                        "confession": "<p><strong>CONFESSION</strong></p>...",
+                        "studies": "<p><strong>FURTHER STUDY:</strong></p>...",
+                        "date": "2025-05-03T00:00:00.000000Z",
+                        "created_at": "2025-05-03T06:04:22.000000Z",
+                        "updated_at": "2025-05-03T06:07:05.000000Z",
+                        "deleted_at": null,
+                        "tags": ["prayer"],
+                        "is_recurring": false,
+                        "recurrence_end_date": null,
+                        "version": 1,
+                        "original_id": null
+                      },
+                      "metadata": {
+                        "is_recurring": false,
+                        "next_available_date": null,
+                        "has_past_devotionals": false
+                      },
+                      "navigation": {
+                        "previous_date": "2024-05-02",
+                        "next_date": "2024-05-04"
+                      }
+                    }
+                  },
+                  "paginated_list": {
+                    "summary": "Response when no X-Client-Date header is provided",
                     "value": {
                       "current_page": 1,
                       "data": [
@@ -1276,22 +1153,26 @@
                           "client_id": 2,
                           "thumbnail": "https://d2c58p2vdu8kb2.cloudfront.net/devotionals/NIh2IeZv2g1k4AoNVhkoQarVWAkSAAnQLrr4DF7j.jpg",
                           "title": "We're Not Mere Humans",
-                          "author": "Chris Oyakhilome",
+                          "author": "Chris Parker",
                           "content": "<div class=\"wp-block-media-text alignwide\">...</div>",
                           "bible_reading": "<p><strong><em>These things have I written unto you...</em></strong></p>",
                           "confession": "<p><strong>CONFESSION</strong></p>...",
                           "studies": "<p><strong>FURTHER STUDY:</strong></p>...",
-                          "date": "2025-05-03",
+                          "date": "2025-05-03T00:00:00.000000Z",
                           "created_at": "2025-05-03T06:04:22.000000Z",
                           "updated_at": "2025-05-03T06:07:05.000000Z",
                           "deleted_at": null,
-                          "tags": "[\"prayer\"]"
+                          "tags": ["prayer"],
+                          "is_recurring": false,
+                          "recurrence_end_date": null,
+                          "version": 1,
+                          "original_id": null
                         }
                       ],
-                      "first_page_url": "https://app.thefaithapp.com/api/v1/open/devotionals?page=1",
+                      "first_page_url": "http://127.0.0.1:8000/api/devotionals?page=1",
                       "from": 1,
                       "last_page": 1,
-                      "last_page_url": "https://app.thefaithapp.com/api/v1/open/devotionals?page=1",
+                      "last_page_url": "http://127.0.0.1:8000/api/devotionals?page=1",
                       "links": [
                         {
                           "url": null,
@@ -1299,7 +1180,7 @@
                           "active": false
                         },
                         {
-                          "url": "https://app.thefaithapp.com/api/v1/open/devotionals?page=1",
+                          "url": "http://127.0.0.1:8000/api/devotionals?page=1",
                           "label": "1",
                           "active": true
                         },
@@ -1310,43 +1191,11 @@
                         }
                       ],
                       "next_page_url": null,
-                      "path": "https://app.thefaithapp.com/api/v1/open/devotionals",
+                      "path": "http://127.0.0.1:8000/api/devotionals",
                       "per_page": 30,
                       "prev_page_url": null,
                       "to": 1,
                       "total": 1
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid API key or Firebase token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error_message": {
-                      "type": "string",
-                      "example": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "User not found"
                     }
                   }
                 }
@@ -2213,7 +2062,7 @@
                                   ],
                                   "format": "date-time",
                                   "description": "Timestamp when the gathering was deleted, or null if not deleted.",
-                                  "example": null
+                            "example": null
                                 }
                               }
                             }
@@ -2341,7 +2190,7 @@
                               "is_active": true,
                               "created_at": "2025-05-24T07:09:55.000000Z",
                               "updated_at": "2025-05-24T08:24:44.000000Z",
-                              "deleted_at": null
+                          "deleted_at": null
                             }
                           ]
                         }
@@ -2766,6 +2615,163 @@
           },
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "DevotionalResponse": {
+        "type": "object",
+        "properties": {
+          "devotional": {
+            "$ref": "#/components/schemas/Devotional"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional information about the devotional and its context",
+            "properties": {
+              "is_recurring": {
+                "type": "boolean",
+                "description": "Indicates whether this devotional is set to recur annually on the same date",
+                "example": false
+              },
+              "next_available_date": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date",
+                "description": "For recurring devotionals, shows the next date when this devotional will be available (one year from the current date). Null for non-recurring devotionals.",
+                "example": "2025-05-03"
+              },
+              "has_past_devotionals": {
+                "type": "boolean",
+                "description": "Indicates whether there are any devotionals available for dates before the requested date",
+                "example": false
+              }
+            }
+          },
+          "navigation": {
+            "type": "object",
+            "description": "Navigation links for moving between dates",
+            "properties": {
+              "previous_date": {
+                "type": "string",
+                "format": "date",
+                "description": "The date immediately before the requested date, formatted as YYYY-MM-DD",
+                "example": "2024-05-02"
+              },
+              "next_date": {
+                "type": "string",
+                "format": "date",
+                "description": "The date immediately after the requested date, formatted as YYYY-MM-DD",
+                "example": "2024-05-04"
+              }
+            }
+          }
+        }
+      },
+      "PaginatedDevotionalsResponse": {
+        "type": "object",
+        "properties": {
+          "current_page": {
+            "type": "integer",
+            "description": "Current page number of the result set.",
+            "example": 1
+          },
+          "data": {
+            "type": "array",
+            "description": "List of devotional objects.",
+            "items": {
+              "$ref": "#/components/schemas/Devotional"
+            }
+          },
+          "first_page_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the first page of results.",
+            "example": "http://127.0.0.1:8000/api/devotionals?page=1"
+          },
+          "from": {
+            "type": "integer",
+            "description": "Index of the first item returned.",
+            "example": 1
+          },
+          "last_page": {
+            "type": "integer",
+            "description": "Last page number of the result set.",
+            "example": 1
+          },
+          "last_page_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the last page of results.",
+            "example": "http://127.0.0.1:8000/api/devotionals?page=1"
+          },
+          "links": {
+            "type": "array",
+            "description": "Pagination navigation links.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "uri",
+                  "description": "URL for the page link, or null if not available.",
+                  "example": null
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Label for the page link (e.g., 'Next', 'Previous', or page number).",
+                  "example": "&laquo; Previous"
+                },
+                "active": {
+                  "type": "boolean",
+                  "description": "Whether this page link is active.",
+                  "example": false
+                }
+              }
+            }
+          },
+          "next_page_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL to the next page of results, or null if on the last page.",
+            "example": null
+          },
+          "path": {
+            "type": "string",
+            "format": "uri",
+            "description": "Base path for the paginated results.",
+            "example": "http://127.0.0.1:8000/api/devotionals"
+          },
+          "per_page": {
+            "type": "integer",
+            "description": "Number of items per page.",
+            "example": 30
+          },
+          "prev_page_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL to the previous page of results, or null if on the first page.",
+            "example": null
+          },
+          "to": {
+            "type": "integer",
+            "description": "Index of the last item returned.",
+            "example": 1
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of items available.",
+            "example": 1
           }
         }
       }
