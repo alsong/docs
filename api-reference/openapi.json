@@ -1112,7 +1112,7 @@
                           "title": {
                             "type": "string",
                             "description": "Title of the devotional.",
-                            "example": "We’re Not Mere Humans"
+                            "example": "We're Not Mere Humans"
                           },
                           "author": {
                             "type": "string",
@@ -1275,7 +1275,7 @@
                           "id": 1,
                           "client_id": 2,
                           "thumbnail": "https://d2c58p2vdu8kb2.cloudfront.net/devotionals/NIh2IeZv2g1k4AoNVhkoQarVWAkSAAnQLrr4DF7j.jpg",
-                          "title": "We’re Not Mere Humans",
+                          "title": "We're Not Mere Humans",
                           "author": "Chris Oyakhilome",
                           "content": "<div class=\"wp-block-media-text alignwide\">...</div>",
                           "bible_reading": "<p><strong><em>These things have I written unto you...</em></strong></p>",
@@ -1404,7 +1404,7 @@
                         "email": {
                           "type": "string",
                           "description": "Contact email for the church.",
-                          "example": "FrancesJAhmad@rhyta.com"
+                          "example": "emilyjanemdn@gmail.com"
                         },
                         "location": {
                           "type": "string",
@@ -1427,24 +1427,24 @@
                           "type": "string",
                           "format": "date-time",
                           "description": "Timestamp when the church was last updated.",
-                          "example": "2025-05-02T14:55:02.000000Z"
+                          "example": "2025-05-24T07:56:51.000000Z"
                         },
                         "about": {
                           "type": "string",
                           "description": "About or description of the church (may contain HTML).",
-                          "example": "<p>This is a life transforming and dynamic church</p>"
+                          "example": "<p data-start=\"86\" data-end=\"423\"><strong data-start=\"86\" data-end=\"109\">Kingdom Life Church</strong> is a Christ-centered community passionate about worship, discipleship, and outreach. Located in the heart of the city, we welcome people from all walks of life to experience the love and grace of God. Our mission is to raise up faithful believers who impact their families, workplaces, and communities for Christ.</p>\n<p data-start=\"425\" data-end=\"872\">One of our core ministries is the <strong data-start=\"459\" data-end=\"482\">Compassion Ministry</strong>, which focuses on serving the practical needs of those around us. From monthly food drives and clothing donations to visiting the sick and supporting single-parent homes, this ministry is rooted in the belief that small acts of kindness can lead to life-changing encounters with God. Volunteers in this ministry are the hands and feet of Jesus, spreading hope and love throughout the city.</p>\n<p data-start=\"874\" data-end=\"1153\">Whether you're looking for a place to grow spiritually or a way to make a difference, the Compassion Ministry offers a meaningful way to serve. We invite anyone with a heart to help others to join us as we continue to be a light in our community, one act of compassion at a time.</p>"
                         },
                         "giving_link": {
                           "type": "string",
                           "format": "uri",
                           "description": "URL for online giving/donations for the church.",
-                          "example": "https://app.thefaithapp.com/give/2"
+                          "example": "http://127.0.0.1:8000/give/2"
                         },
                         "prayer_request_link": {
                           "type": "string",
                           "format": "uri",
                           "description": "URL for submitting prayer requests to the church.",
-                          "example": "https://app.thefaithapp.com/prayer-requests/2"
+                          "example": "http://127.0.0.1:8000/prayer-requests/2"
                         },
                         "socials": {
                           "type": "object",
@@ -1567,6 +1567,83 @@
                               }
                             }
                           }
+                        },
+                        "gatherings": {
+                          "type": "array",
+                          "description": "List of gatherings/meetings for the church.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "Unique identifier for the gathering.",
+                                "example": 1
+                              },
+                              "client_id": {
+                                "type": "integer",
+                                "description": "ID of the church/client this gathering belongs to.",
+                                "example": 2
+                              },
+                              "gathering_type_id": {
+                                "type": "integer",
+                                "description": "ID of the gathering type.",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the gathering.",
+                                "example": "First Service"
+                              },
+                              "day_of_week": {
+                                "type": "string",
+                                "description": "Day of the week when the gathering occurs.",
+                                "example": "Sunday"
+                              },
+                              "start_time": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Start time of the gathering.",
+                                "example": "2025-05-24T10:00:00.000000Z"
+                              },
+                              "end_time": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "End time of the gathering.",
+                                "example": "2025-05-24T13:51:00.000000Z"
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "Description of the gathering.",
+                                "example": "This is our first service"
+                              },
+                              "is_active": {
+                                "type": "boolean",
+                                "description": "Whether the gathering is currently active.",
+                                "example": true
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Timestamp when the gathering was created.",
+                                "example": "2025-05-24T07:51:09.000000Z"
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Timestamp when the gathering was last updated.",
+                                "example": "2025-05-24T08:26:30.000000Z"
+                              },
+                              "deleted_at": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "date-time",
+                                "description": "Timestamp when the gathering was deleted, or null if not deleted.",
+                                "example": null
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -1579,14 +1656,14 @@
                       "church": {
                         "id": 2,
                         "name": "Monk House Maker",
-                        "email": "FrancesJAhmad@rhyta.com",
+                        "email": "emilyjanemdn@gmail.com",
                         "location": "4078 Poco Mas Drive",
                         "image": "https://d2c58p2vdu8kb2.cloudfront.net/clients/wcwOY98v6H9Aq4ag8vOnDXMgGXfyZyIJmRyBguj9.jpg",
                         "created_at": "2025-02-08T11:55:32.000000Z",
-                        "updated_at": "2025-05-02T14:55:02.000000Z",
-                        "about": "<p>This is a life transforming and dynamic church</p>",
-                        "giving_link": "https://app.thefaithapp.com/give/2",
-                        "prayer_request_link": "https://app.thefaithapp.com/prayer-requests/2",
+                        "updated_at": "2025-05-24T07:56:51.000000Z",
+                        "about": "<p data-start=\"86\" data-end=\"423\"><strong data-start=\"86\" data-end=\"109\">Kingdom Life Church</strong> is a Christ-centered community passionate about worship, discipleship, and outreach. Located in the heart of the city, we welcome people from all walks of life to experience the love and grace of God. Our mission is to raise up faithful believers who impact their families, workplaces, and communities for Christ.</p>\n<p data-start=\"425\" data-end=\"872\">One of our core ministries is the <strong data-start=\"459\" data-end=\"482\">Compassion Ministry</strong>, which focuses on serving the practical needs of those around us. From monthly food drives and clothing donations to visiting the sick and supporting single-parent homes, this ministry is rooted in the belief that small acts of kindness can lead to life-changing encounters with God. Volunteers in this ministry are the hands and feet of Jesus, spreading hope and love throughout the city.</p>\n<p data-start=\"874\" data-end=\"1153\">Whether you're looking for a place to grow spiritually or a way to make a difference, the Compassion Ministry offers a meaningful way to serve. We invite anyone with a heart to help others to join us as we continue to be a light in our community, one act of compassion at a time.</p>",
+                        "giving_link": "http://127.0.0.1:8000/give/2",
+                        "prayer_request_link": "http://127.0.0.1:8000/prayer-requests/2",
                         "socials": {
                           "id": 1,
                           "client_id": 2,
@@ -1609,6 +1686,22 @@
                             "contact": "+1 775-370-2016",
                             "created_at": "2025-05-03T06:32:50.000000Z",
                             "updated_at": "2025-05-03T06:32:50.000000Z",
+                            "deleted_at": null
+                          }
+                        ],
+                        "gatherings": [
+                          {
+                            "id": 1,
+                            "client_id": 2,
+                            "gathering_type_id": 1,
+                            "name": "First Service",
+                            "day_of_week": "Sunday",
+                            "start_time": "2025-05-24T10:00:00.000000Z",
+                            "end_time": "2025-05-24T13:51:00.000000Z",
+                            "description": "This is our first service",
+                            "is_active": true,
+                            "created_at": "2025-05-24T07:51:09.000000Z",
+                            "updated_at": "2025-05-24T08:26:30.000000Z",
                             "deleted_at": null
                           }
                         ]
@@ -2047,6 +2140,83 @@
                             "format": "date-time",
                             "description": "Timestamp when the branch was deleted, or null if not deleted.",
                             "example": null
+                          },
+                          "gatherings": {
+                            "type": "array",
+                            "description": "List of gatherings/meetings for this branch.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "Unique identifier for the gathering.",
+                                  "example": 1
+                                },
+                                "branch_id": {
+                                  "type": "integer",
+                                  "description": "ID of the branch this gathering belongs to.",
+                                  "example": 1
+                                },
+                                "gathering_type_id": {
+                                  "type": "integer",
+                                  "description": "ID of the gathering type.",
+                                  "example": 1
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the gathering.",
+                                  "example": "Sunday First Service"
+                                },
+                                "day_of_week": {
+                                  "type": "string",
+                                  "description": "Day of the week when the gathering occurs.",
+                                  "example": "Sunday"
+                                },
+                                "start_time": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Start time of the gathering.",
+                                  "example": "2025-05-24T10:00:00.000000Z"
+                                },
+                                "end_time": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "End time of the gathering.",
+                                  "example": "2025-05-24T11:00:00.000000Z"
+                                },
+                                "description": {
+                                  "type": "string",
+                                  "description": "Description of the gathering.",
+                                  "example": "This is our weekly sunday service"
+                                },
+                                "is_active": {
+                                  "type": "boolean",
+                                  "description": "Whether the gathering is currently active.",
+                                  "example": true
+                                },
+                                "created_at": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Timestamp when the gathering was created.",
+                                  "example": "2025-05-24T07:09:55.000000Z"
+                                },
+                                "updated_at": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Timestamp when the gathering was last updated.",
+                                  "example": "2025-05-24T08:24:44.000000Z"
+                                },
+                                "deleted_at": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "date-time",
+                                  "description": "Timestamp when the gathering was deleted, or null if not deleted.",
+                                  "example": null
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -2157,7 +2327,23 @@
                           "contact": "+1 775-370-2016",
                           "created_at": "2025-05-03T06:32:50.000000Z",
                           "updated_at": "2025-05-03T06:32:50.000000Z",
-                          "deleted_at": null
+                          "deleted_at": null,
+                          "gatherings": [
+                            {
+                              "id": 1,
+                              "branch_id": 1,
+                              "gathering_type_id": 1,
+                              "name": "Sunday First Service",
+                              "day_of_week": "Sunday",
+                              "start_time": "2025-05-24T10:00:00.000000Z",
+                              "end_time": "2025-05-24T11:00:00.000000Z",
+                              "description": "This is our weekly sunday service",
+                              "is_active": true,
+                              "created_at": "2025-05-24T07:09:55.000000Z",
+                              "updated_at": "2025-05-24T08:24:44.000000Z",
+                              "deleted_at": null
+                            }
+                          ]
                         }
                       ],
                       "first_page_url": "https://app.thefaithapp.com/api/v1/open/branches?page=1",
