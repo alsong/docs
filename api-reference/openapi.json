@@ -1729,18 +1729,19 @@
                           "details": {
                             "type": "string",
                             "description": "Details or description of the event (may contain HTML).",
-                            "example": "<div class=\"fusion-fullwidth fullwidth-box ...\">"
+                            "example": "<div class=\"fusion-fullwidth fullwidth-box...\">"
                           },
                           "date": {
                             "type": "string",
                             "format": "date-time",
-                            "description": "Date and time of the event.",
-                            "example": "2025-04-17 00:00:00"
+                            "description": "Start date of the event.",
+                            "example": "2025-04-17T00:00:00.000000Z"
                           },
                           "time": {
                             "type": "string",
-                            "description": "Time of the event (HH:MM:SS).",
-                            "example": "09:19:00"
+                            "format": "date-time",
+                            "description": "Start time of the event.",
+                            "example": "2025-05-24T09:19:00.000000Z"
                           },
                           "created_at": {
                             "type": "string",
@@ -1753,6 +1754,86 @@
                             "format": "date-time",
                             "description": "Timestamp when the event was last updated.",
                             "example": "2025-03-23T18:20:02.000000Z"
+                          },
+                          "is_recurring": {
+                            "type": "boolean",
+                            "description": "Indicates whether the event is recurring.",
+                            "example": false
+                          },
+                          "recurrence_pattern": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "description": "Pattern of recurrence (e.g., 'weekly', 'monthly', 'yearly'). Null if not recurring.",
+                            "example": "weekly"
+                          },
+                          "recurrence_end_date": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time",
+                            "description": "End date for recurring events. Null if no end date specified.",
+                            "example": null
+                          },
+                          "is_multi_day": {
+                            "type": "boolean",
+                            "description": "Indicates whether the event spans multiple days.",
+                            "example": false
+                          },
+                          "end_date": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time",
+                            "description": "End date for multi-day events. Null if not a multi-day event.",
+                            "example": null
+                          },
+                          "end_time": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time",
+                            "description": "End time for multi-day events. Null if not a multi-day event.",
+                            "example": null
+                          },
+                          "sort_date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Date used for sorting events (next occurrence for recurring events).",
+                            "example": "2025-04-17T00:00:00.000000Z"
+                          },
+                          "recurrence": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "description": "Recurrence information for recurring events. Null if not recurring.",
+                            "properties": {
+                              "pattern": {
+                                "type": "string",
+                                "description": "Pattern of recurrence (e.g., 'weekly', 'monthly', 'yearly').",
+                                "example": "weekly"
+                              },
+                              "end_date": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "date-time",
+                                "description": "End date for the recurrence. Null if no end date specified.",
+                                "example": null
+                              },
+                              "next_occurrence": {
+                                "type": "string",
+                                "format": "date",
+                                "description": "Next occurrence date for the recurring event.",
+                                "example": "2025-05-31"
+                              }
+                            }
                           }
                         }
                       }
@@ -1860,11 +1941,42 @@
                           "client_id": 2,
                           "title": "Kingdom Impartation",
                           "thumbnail": "https://d2c58p2vdu8kb2.cloudfront.net/events/WbYWMPFRYnKfCyYlReLjrKRyrP6SkTmGY6KhYBI9.png",
-                          "details": "<div class=\"fusion-fullwidth fullwidth-box ...\">",
-                          "date": "2025-04-17 00:00:00",
-                          "time": "09:19:00",
+                          "details": "<div class=\"fusion-fullwidth fullwidth-box...\">",
+                          "date": "2025-04-17T00:00:00.000000Z",
+                          "time": "2025-05-24T09:19:00.000000Z",
                           "created_at": "2025-03-23T18:20:02.000000Z",
-                          "updated_at": "2025-03-23T18:20:02.000000Z"
+                          "updated_at": "2025-03-23T18:20:02.000000Z",
+                          "is_recurring": false,
+                          "recurrence_pattern": null,
+                          "recurrence_end_date": null,
+                          "is_multi_day": false,
+                          "end_date": null,
+                          "end_time": null,
+                          "sort_date": "2025-04-17T00:00:00.000000Z"
+                        },
+                        {
+                          "id": 5,
+                          "deleted_at": null,
+                          "client_id": 2,
+                          "title": "Daily Conference",
+                          "thumbnail": "https://d2c58p2vdu8kb2.cloudfront.net/events/kNiHY3rZ6quJrvGgNSXIofVI5OqZKRXPfobNhwVn.jpg",
+                          "details": "<p>Our weekly sunday service</p>",
+                          "date": "2025-05-03T00:00:00.000000Z",
+                          "time": "2025-05-24T05:00:00.000000Z",
+                          "created_at": "2025-05-24T12:43:14.000000Z",
+                          "updated_at": "2025-05-24T12:43:14.000000Z",
+                          "is_recurring": true,
+                          "recurrence_pattern": "weekly",
+                          "recurrence_end_date": null,
+                          "is_multi_day": false,
+                          "end_date": null,
+                          "end_time": null,
+                          "recurrence": {
+                            "pattern": "weekly",
+                            "end_date": null,
+                            "next_occurrence": "2025-05-31"
+                          },
+                          "sort_date": "2025-05-31"
                         }
                       ],
                       "first_page_url": "https://app.thefaithapp.com/api/v1/open/events?page=1",
@@ -1892,8 +2004,8 @@
                       "path": "https://app.thefaithapp.com/api/v1/open/events",
                       "per_page": 10,
                       "prev_page_url": null,
-                      "to": 1,
-                      "total": 1
+                      "to": 3,
+                      "total": 3
                     }
                   }
                 }
