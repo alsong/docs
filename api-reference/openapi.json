@@ -2588,6 +2588,222 @@
           }
         }
       }
+    },
+    "/v1/open/member/details": {
+      "put": {
+        "summary": "Update Member Details",
+        "description": "Update the profile details of the authenticated member. This endpoint allows updating personal information such as phone number, gender, and biography.",
+        "tags": [
+          "Open API"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "Your client API key from the dashboard (Settings page).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Member details to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "description": "Member's phone number in international format (e.g., +1234567890).",
+                    "example": "+1234567890"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "description": "Member's gender. Common values include 'male', 'female', 'other'.",
+                    "example": "male",
+                    "enum": ["male", "female", "other"]
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "Member's biography or personal description.",
+                    "example": "Member's biography here"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Member details updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message indicating the update was successful.",
+                      "example": "Member details updated successfully"
+                    },
+                    "member": {
+                      "type": "object",
+                      "description": "Updated member object containing all member details.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "Unique identifier for the member.",
+                          "example": 1
+                        },
+                        "client_id": {
+                          "type": "integer",
+                          "description": "ID of the church/client this member belongs to.",
+                          "example": 2
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Full name of the member.",
+                          "example": "Nick A. Boyer"
+                        },
+                        "login_type": {
+                          "type": "string",
+                          "description": "Authentication method used by the member (e.g., 'firebase').",
+                          "example": "firebase"
+                        },
+                        "deleted_at": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time",
+                          "description": "Timestamp when the member was deleted, or null if not deleted.",
+                          "example": null
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the member was created.",
+                          "example": "2025-05-02T15:35:36.000000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the member was last updated.",
+                          "example": "2025-05-24T11:43:29.000000Z"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "Member's email address.",
+                          "example": "jarzikedru@gufum.com"
+                        },
+                        "uuid": {
+                          "type": "string",
+                          "description": "Unique identifier from the authentication provider (e.g., Firebase UID).",
+                          "example": "9JDO5QVUNFYWd9apKGiJEuLsDRE3"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "description": "Member's phone number in international format.",
+                          "example": "+1234567890"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "description": "Member's gender.",
+                          "example": "male"
+                        },
+                        "bio": {
+                          "type": "string",
+                          "description": "Member's biography or personal description.",
+                          "example": "Member's biography here"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful update response",
+                    "value": {
+                      "message": "Member details updated successfully",
+                      "member": {
+                        "id": 1,
+                        "client_id": 2,
+                        "name": "Nick A. Boyer",
+                        "login_type": "firebase",
+                        "deleted_at": null,
+                        "created_at": "2025-05-02T15:35:36.000000Z",
+                        "updated_at": "2025-05-24T11:43:29.000000Z",
+                        "email": "jarzikedru@gufum.com",
+                        "uuid": "9JDO5QVUNFYWd9apKGiJEuLsDRE3",
+                        "phone": "+1234567890",
+                        "gender": "male",
+                        "bio": "Member's biography here"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid API key or Firebase token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error_message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Member not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error - Invalid input data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid phone number format"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "webhooks": {

@@ -30,7 +30,8 @@
               "api-reference/endpoint/church",
               "api-reference/endpoint/events",
               "api-reference/endpoint/branches",
-              "api-reference/endpoint/notifications"
+              "api-reference/endpoint/notifications",
+              "api-reference/endpoint/member"
             ]
           }
         ]
