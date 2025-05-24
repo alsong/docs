@@ -1586,7 +1586,7 @@
                               },
                               "gathering_type_id": {
                                 "type": "integer",
-                                "description": "ID of the gathering type.",
+                                "description": "ID of the gathering type. Possible values:\n- `1`: Service - Regular worship services including Sunday services, midweek services, etc.\n- `2`: Study - Bible study groups, Sunday school, discipleship classes\n- `3`: Prayer - Regular prayer gatherings, prayer vigils\n- `4`: Youth - Youth services, youth meetings, youth activities\n- `5`: Children - Children's church, Sunday school, children's activities\n- `6`: Food Pantry - Food distribution services, community feeding programs\n- `7`: Outreach - Community outreach, evangelism programs\n- `8`: Fellowship - Fellowship meals, social gatherings, community events\n- `9`: Choir - Choir rehearsals, music ministry practices\n- `10`: Counseling - Pastoral counseling, support groups",
                                 "example": 1
                               },
                               "name": {
@@ -2159,7 +2159,7 @@
                                 },
                                 "gathering_type_id": {
                                   "type": "integer",
-                                  "description": "ID of the gathering type.",
+                                  "description": "ID of the gathering type. Possible values:\n- `1`: Service - Regular worship services including Sunday services, midweek services, etc.\n- `2`: Study - Bible study groups, Sunday school, discipleship classes\n- `3`: Prayer - Regular prayer gatherings, prayer vigils\n- `4`: Youth - Youth services, youth meetings, youth activities\n- `5`: Children - Children's church, Sunday school, children's activities\n- `6`: Food Pantry - Food distribution services, community feeding programs\n- `7`: Outreach - Community outreach, evangelism programs\n- `8`: Fellowship - Fellowship meals, social gatherings, community events\n- `9`: Choir - Choir rehearsals, music ministry practices\n- `10`: Counseling - Pastoral counseling, support groups",
                                   "example": 1
                                 },
                                 "name": {
