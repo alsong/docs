@@ -31,7 +31,10 @@
               "api-reference/endpoint/events",
               "api-reference/endpoint/branches",
               "api-reference/endpoint/notifications",
-              "api-reference/endpoint/member"
+              "api-reference/endpoint/member",
+              "api-reference/endpoint/bulletins",
+              "api-reference/endpoint/bulletins-latest",
+              "api-reference/endpoint/bulletins-single"
             ]
           }
         ]

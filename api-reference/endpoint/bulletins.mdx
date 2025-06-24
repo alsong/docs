@@ -1,0 +1,11 @@
+---
+title: 'Get Bulletins'
+openapi: 'GET /v1/open/bulletins'
+---
+
+Retrieves a paginated list of bulletins for the authenticated user's church.
+
+- Requires both an API key and a Firebase ID token.
+- Supports optional pagination.
+- Bulletins can be either native (HTML content) or PDF files.
+- Each bulletin may contain sections with different content types (text, links, images). 

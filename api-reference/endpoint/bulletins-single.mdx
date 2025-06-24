@@ -1,0 +1,11 @@
+---
+title: 'Get Single Bulletin'
+openapi: 'GET /v1/open/bulletins/{id}'
+---
+
+Retrieves a specific bulletin by its ID for the authenticated user's church.
+
+- Requires both an API key and a Firebase ID token.
+- Returns the complete bulletin with all its content and sections.
+- Use the bulletin ID from the list endpoint to retrieve specific bulletins.
+- Returns 404 if the bulletin is not found or doesn't belong to the user's church. 
